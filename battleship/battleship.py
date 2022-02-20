@@ -18,9 +18,14 @@ class Battleship():
         self.cursor_y = 0
         self.cursor_x = 0
 
-    def as_str(self):
-        return "\n\n".join([self.fields[0].as_str(), \
-                            self.fields[1].as_str(hidden=(not config.DEBUG))])
+    def get_cursor(self):
+        return (self.cursor_y, self.cursor_x)
+
+    def left_field_as_str(self):
+        return self.fields[0].as_str()
+
+    def right_field_as_str(self):
+        return self.fields[1].as_str(hidden=(not config.DEBUG))
     
     def move_cursor(self, char):
         match char:
@@ -42,7 +47,6 @@ class Battleship():
         self.fields[1].bomb(self.cursor_y, self.cursor_x)
         ai_y, ai_x = self.AI_make_decision()
         self.fields[0].bomb(ai_y, ai_x)
-
 
     def is_over(self):
         return self.fields[0].defeated or self.fields[1].defeated
