@@ -1,14 +1,11 @@
 import curses
 from random import randint
 
-import config
+from config import *
 from field import Field
 
 
 class Battleship():
-    """
-    This class implements game logic.
-    """
     def __init__(self, height, width):
         self.height = height
         self.width = width
@@ -21,11 +18,24 @@ class Battleship():
     def get_cursor(self):
         return (self.cursor_y, self.cursor_x)
 
+    def get_status(self):
+        if self.is_over():
+            return "Game over! (press any key)"
+        else:
+            return "Try to win!"
+    
+    def handle_input(self, ch):
+        if ch in [curses.KEY_LEFT, curses.KEY_RIGHT, \
+                  curses.KEY_UP, curses.KEY_DOWN]:
+            self.move_cursor(ch)
+        elif ch == CONTROL_BOMB:
+            self.make_move()
+
     def left_field_as_str(self):
         return self.fields[0].as_str()
 
     def right_field_as_str(self):
-        return self.fields[1].as_str(hidden=(not config.DEBUG))
+        return self.fields[1].as_str(hidden=(not DEBUG))
     
     def move_cursor(self, char):
         match char:
