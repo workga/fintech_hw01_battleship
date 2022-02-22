@@ -6,14 +6,14 @@ from config import *
 LEGEND = {
     "SHIP": "#",
     "DAMAGED": "X",
-
     "UNCHECKED": " ",
     "CHECKED": "~",
     # for unchecked tiles which can't contain ship, add it later
     # "KNOWN"     : "-",
 }
 
-class Tile():
+
+class Tile:
     def __init__(self):
         self.is_ship = False
         self.is_checked = False
@@ -44,13 +44,12 @@ class Tile():
             return self.is_ship
 
 
-class Field():
+class Field:
     def __init__(self, height, width):
         self.height = height
         self.width = width
 
-        self.tiles = [[Tile() for j in range(self.width)]
-                                for i in range(self.height)]
+        self.tiles = [[Tile() for j in range(self.width)] for i in range(self.height)]
 
         self.ships_area = 0
         self.fill()
@@ -91,7 +90,6 @@ class Field():
         # n is max size of ships,
         # it looks complicated, but it's based on math and works great
         n = floor((sqrt(1 + 8 * h) - 1) // 2)
-        
 
         # choose one set of ships,
         # ships_area is total area of all ships in choosen set
@@ -100,9 +98,9 @@ class Field():
         for i in range(1, n + 1):
             ships.append({"size": i, "count": n + 1 - i})
             ships_area += i * (n + 1 - i)
-        
+
         # repeat this set several times
-        sets_count = floor(TARGET_FILLING // (ships_area / (h*w)))
+        sets_count = floor(TARGET_FILLING // (ships_area / (h * w)))
         if sets_count == 0:
             sets_count = 1
 
@@ -111,7 +109,7 @@ class Field():
         ships_area *= sets_count
 
         return ships, ships_area
-    
+
     def check_region(self, region_up, region_down, region_left, region_right):
         """
         Check whether choosen region contains ships or not
@@ -121,7 +119,6 @@ class Field():
                 if not self.tiles[i][j].is_empty():
                     return False
         return True
-
 
     def place_ship(self, size):
         """
@@ -137,17 +134,10 @@ class Field():
             # define surrounding region
             region_up = max(y - 1, 0)
             region_left = max(x - 1, 0)
-            region_down = min(
-                self.height - 1,
-                (y + size) if vertical else y + 1
-            )
-            region_right = min(
-                self.width - 1,
-                (x + size) if not vertical else x + 1
-            )
+            region_down = min(self.height - 1, (y + size) if vertical else y + 1)
+            region_right = min(self.width - 1, (x + size) if not vertical else x + 1)
 
-            if self.check_region(region_up, region_down,
-                                 region_left, region_right):
+            if self.check_region(region_up, region_down, region_left, region_right):
                 if vertical:
                     for yi in range(y, y + size):
                         self.tiles[yi][x].put_ship()

@@ -8,7 +8,7 @@ from config import *
 from field import Field
 
 
-class Battleship():
+class Battleship:
     def __init__(self, height, width, load=False):
         self.height = height
         self.width = width
@@ -25,9 +25,9 @@ class Battleship():
 
     def save(self):
         data = {
-            "left_field" : self.left_field,
-            "right_field" : self.right_field,
-            "ai_queue" : self.ai_queue
+            "left_field": self.left_field,
+            "right_field": self.right_field,
+            "ai_queue": self.ai_queue,
         }
 
         with open(f"./.battleship.{self.height}x{self.width}.saved", "wb") as f_data:
@@ -42,7 +42,7 @@ class Battleship():
         self.left_field = data["left_field"]
         self.right_field = data["right_field"]
         self.ai_queue = data["ai_queue"]
-    
+
     def delete(self):
         if os.path.isfile(f"./.battleship.{self.height}x{self.width}.saved"):
             os.remove(f"./.battleship.{self.height}x{self.width}.saved")
@@ -63,18 +63,16 @@ class Battleship():
             return ("Game over! Computer won! (press any key)", "")
         else:
             return (f"""{left_area} remains""", f"""{right_area} remains""")
-    
+
     def get_fields_as_str(self):
-        return self.left_field.as_str(), \
-               self.right_field.as_str(hidden=(not DEBUG))
+        return self.left_field.as_str(), self.right_field.as_str(hidden=(not DEBUG))
 
     def handle_input(self, ch):
-        if ch in [curses.KEY_LEFT, curses.KEY_RIGHT, \
-                  curses.KEY_UP, curses.KEY_DOWN]:
+        if ch in [curses.KEY_LEFT, curses.KEY_RIGHT, curses.KEY_UP, curses.KEY_DOWN]:
             self.move_cursor(ch)
         elif ch == CONTROL_BOMB:
             self.make_move()
-    
+
     def move_cursor(self, char):
         match char:
             case curses.KEY_LEFT:
