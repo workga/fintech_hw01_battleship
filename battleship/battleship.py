@@ -1,8 +1,8 @@
-import curses
-from random import randint, shuffle
-from collections import deque
 import os
 import pickle
+import curses
+from random import shuffle
+from collections import deque
 
 from config import *
 from field import Field

@@ -1,8 +1,5 @@
-import os
 import curses
 import typer
-
-# from typing import Optional
 
 from config import *
 from battleship import Battleship
