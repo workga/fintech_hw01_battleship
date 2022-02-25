@@ -1,5 +1,13 @@
 import curses
-from config import *
+
+from config import (
+    W_TITLE_H,
+    W_HELP_H,
+    W_STATUS_H,
+    TITLE_TEXT,
+    HELP_TEXT,
+    STATUS_TEXT_MAX_LEN,
+)
 
 
 class View:
@@ -19,7 +27,7 @@ class View:
         self.windows = {}
 
     def get_required_size(self):
-        return (self.required_height, self.required_width)
+        return self.required_height, self.required_width
 
     def resize(self):
         if not self.check_console_size():
@@ -47,18 +55,18 @@ class View:
 
         return True
 
-    def update(self, game):
-        cursor_y, cursor_x = game.get_cursor_pos()
-        left_status_str, right_status_str = game.get_statuses_as_str()
-        left_field_str, right_field_str = game.get_fields_as_str()
+    def update(self):
+        cursor_y, cursor_x = self.game.get_cursor_pos()
+        left_status_str, right_status_str = self.game.get_statuses_as_str()
+        left_field_str, right_field_str = self.game.get_fields_as_str()
 
         self.screen.clear()
 
-        self.centered_output(self.windows["title"], TITLE_TEXT)
-        self.centered_output(self.windows["help"], HELP_TEXT)
-        self.centered_output(self.windows["left_status"], left_status_str)
-        self.centered_output(self.windows["right_status"], right_status_str)
-        self.centered_output(self.windows["left_field"], left_field_str)
+        View.centered_output(self.windows["title"], TITLE_TEXT)
+        View.centered_output(self.windows["help"], HELP_TEXT)
+        View.centered_output(self.windows["left_status"], left_status_str)
+        View.centered_output(self.windows["right_status"], right_status_str)
+        View.centered_output(self.windows["left_field"], left_field_str)
 
         pad_y, pad_x = self.centered_output(
             self.windows["right_field"], right_field_str
@@ -75,7 +83,8 @@ class View:
         for w in self.windows.values():
             w.refresh()
 
-    def centered_output(self, window, text):
+    @staticmethod
+    def centered_output(window, text):
         """
         Output text in the center of the window
         """

@@ -7,7 +7,7 @@ This is a simple console implementation of the Battleship game using Curses and 
 - Automatically saves the unfinished game for each field size.
 - Allows you to change the size of the console and asks you to increase its size if necessary.
 
-### Requierments
+### Requirements
 - click==8.0.4
 - typer==0.4.0
 
@@ -25,6 +25,14 @@ python battleship 20 20
 And even so:
 ```bash
 python battleship 20
+```
+
+Using debug mode:
+```bash
+python battleship --debug
+```
+```bash
+python battleship --debug 20 20
 ```
 
 ### Control

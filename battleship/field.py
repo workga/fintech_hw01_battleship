@@ -1,7 +1,9 @@
 from random import randint
 from math import sqrt, floor
 
-from config import *
+from config import (
+    TARGET_FILLING,
+)
 
 LEGEND = {
     "SHIP": "#",
@@ -49,7 +51,7 @@ class Field:
         self.height = height
         self.width = width
 
-        self.tiles = [[Tile() for j in range(self.width)] for i in range(self.height)]
+        self.tiles = [[Tile() for _ in range(self.width)] for _ in range(self.height)]
 
         self.ships_area = 0
         self.fill()
@@ -92,7 +94,7 @@ class Field:
         n = floor((sqrt(1 + 8 * h) - 1) // 2)
 
         # choose one set of ships,
-        # ships_area is total area of all ships in choosen set
+        # ships_area is total area of all ships in chosen set
         ships = []
         ships_area = 0
         for i in range(1, n + 1):
@@ -112,7 +114,7 @@ class Field:
 
     def check_region(self, region_up, region_down, region_left, region_right):
         """
-        Check whether choosen region contains ships or not
+        Check whether chosen region contains ships or not
         """
         for i in range(region_up, region_down + 1):
             for j in range(region_left, region_right + 1):
