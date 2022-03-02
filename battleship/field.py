@@ -63,12 +63,12 @@ class Field:
         return self.ships_area <= 0
 
     def as_str(self, hidden=False):
-        border = "+" + ("-" * self.width) + "+"
+        border = f"+{'-' * self.width}+"
 
         lines = [border]
         for i in range(self.height):
             row = "".join([t.as_str(hidden=hidden) for t in self.tiles[i]])
-            lines.append("|" + row + "|")
+            lines.append(f"|{row}|")
         lines.append(border)
 
         return "\n".join(lines)

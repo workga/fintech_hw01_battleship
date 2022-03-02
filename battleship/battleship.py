@@ -5,7 +5,6 @@ from random import shuffle
 from collections import deque
 
 from config import (
-    DEBUG,
     CONTROL_BOMB,
 )
 from field import Field
@@ -22,6 +21,7 @@ class Battleship:
         self.cursor_x = 0
 
         self.filename = f"./.battleship.{self.height}x{self.width}.saved"
+        self.ai_queue = deque()
 
         if Path(self.filename).is_file():
             self.load()
@@ -41,8 +41,6 @@ class Battleship:
             pickle.dump(data, f_data)
 
     def load(self):
-        data = None
-
         with open(self.filename, "rb") as f_data:
             data = pickle.load(f_data)
 

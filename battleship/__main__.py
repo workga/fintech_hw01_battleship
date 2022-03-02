@@ -61,7 +61,7 @@ def main(screen, height, width, debug):
             screen.addstr(
                 0, 0, f"Required size of console is {required_height}x{required_width}"
             )
-            screen.addstr(1, 0, f"Resize console or press q to quit")
+            screen.addstr(1, 0, "Resize console or press q to quit")
 
             ch = screen.getch()
             resize_attempts_count += 1
